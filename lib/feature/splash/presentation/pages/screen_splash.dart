@@ -1,3 +1,4 @@
+import 'package:blocsevendays/core/navigation/app_router.dart';
 import 'package:blocsevendays/feature/splash/presentation/bloc/bloc_splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    getKey();
+    _getKey();
   }
 
   @override
@@ -32,6 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
         listener: (context, state) {
           if (state.status == SplashStatus.failure) {
             SnackbarUtils.showErrorSnackbar(context, state.errorMessage!);
+          } else if (state.status == SplashStatus.success) {
+            _toMainPage();
           }
         },
         builder: (context, state) {
@@ -53,8 +56,15 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
   
-  void getKey() {
+  void _getKey() {
     context.read<SplashBloc>().add(const GetKeyEvent());
+  }
+
+  void _toMainPage() {
+    Navigator.popAndPushNamed(
+      context,
+      AppRouteConstants.mainPage,
+    );
   }
   
 }
