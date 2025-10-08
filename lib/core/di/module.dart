@@ -3,6 +3,9 @@ import 'package:blocsevendays/feature/splash/presentation/bloc/bloc_splash.dart'
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import '../../feature/main/data/news_remote_datasource.dart';
+import '../../feature/main/data/news_repository_impl.dart';
+import '../../feature/main/domain/get_news_usecase.dart';
+import '../../feature/main/domain/news_repository.dart';
 import '../../feature/splash/data/key_local_datasource.dart';
 import '../../feature/splash/data/key_remote_datasource.dart';
 import '../../feature/splash/data/key_repository_impl.dart';
@@ -43,20 +46,20 @@ class AppModule {
       ),
     );
 
-    /*getIt.registerSingleton<NewsRepository>(
+    getIt.registerSingleton<NewsRepository>(
       NewsRepositoryImpl(
         getIt<NewsRemoteDataSource>(),
       ),
-    );*/
+    );
 
     // Use cases
     getIt.registerSingleton<GetKeyUseCase>(
       GetKeyUseCase(getIt<KeyRepository>()),
     );
 
-    /*getIt.registerSingleton<GetNewsUseCase>(
+    getIt.registerSingleton<GetNewsUseCase>(
       GetNewsUseCase(getIt<NewsRepository>()),
-    );*/
+    );
 
 
     // BLoC
@@ -66,11 +69,11 @@ class AppModule {
       ),
     );
 
-    /*getIt.registerFactory<MainBloc>(
+    getIt.registerFactory<MainBloc>(
           () => MainBloc(
-        getKeyUseCase: getIt<GetNewsUseCase>(),
+        getNewsUseCase: getIt<GetNewsUseCase>(),
       ),
-    );*/
+    );
 
   }
 }

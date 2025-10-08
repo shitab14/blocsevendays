@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/navigation/app_router.dart';
 import 'core/utils/app_theme.dart';
+import 'feature/main/presentation/bloc/bloc_main.dart';
 
 void main() async {
 
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => Injector.get<SplashBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => Injector.get<MainBloc>(),
         ),
       ],
       child: MaterialApp(
