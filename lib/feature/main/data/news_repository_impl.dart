@@ -1,4 +1,5 @@
 import 'package:blocsevendays/core/exceptions/app_exceptions.dart';
+import 'package:blocsevendays/core/utils/logger.dart';
 import 'package:blocsevendays/feature/main/domain/article_entity.dart';
 import 'package:dart_either/dart_either.dart';
 import 'package:dart_either/src/dart_either.dart';
@@ -20,6 +21,7 @@ class NewsRepositoryImpl implements NewsRepository {
       ) async {
     try {
       final newsDataModel = await _remoteDataSource.getNews(q, from, sortBy, apiKey);
+
       return Right(newsDataModel.toEntity().articles);
     } on AppException catch (e) {
       return Left(ExceptionHandler.handleException(e));

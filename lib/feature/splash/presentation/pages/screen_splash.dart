@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
           } else {
             return SizedBox(
               child: Container(
-                color: Colors.red,
+                color: Colors.blueGrey,
               ),
 
             );

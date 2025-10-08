@@ -7,12 +7,12 @@ import 'api_interceptor.dart';
 class KeyClient {
   late final Dio dio;
 
-  KeyClient(Dio _dio) {
-    dio = _dio;
-    _dio.options.baseUrl = EnvironmentConfig.api_key_baseUrl;
-    _dio.options.connectTimeout = const Duration(seconds: 30);
-    _dio.options.receiveTimeout = const Duration(seconds: 30);
-    _dio.interceptors.add(ApiInterceptor());
+  KeyClient() {
+    dio = Dio();
+    dio.options.baseUrl = EnvironmentConfig.api_key_baseUrl;
+    dio.options.connectTimeout = const Duration(seconds: 30);
+    dio.options.receiveTimeout = const Duration(seconds: 30);
+    dio.interceptors.add(ApiInterceptor());
   }
 
   Future<Response> get(

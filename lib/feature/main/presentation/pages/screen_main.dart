@@ -1,4 +1,11 @@
+import 'package:blocsevendays/core/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/utils/date_time_util.dart';
+import '../bloc/bloc_main.dart';
+import '../widgets/data_list_widget.dart';
+import '../widgets/horizontal_calendar_widget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -12,7 +19,13 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    _getTodaysNews();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final today = DateTime.now();
+      context.read<MainBloc>().add(SelectDateEvent(today));
+      context.read<MainBloc>().add(
+          GetNewsEvent(AppConstants.q, DateTimeUtil.formatDateForApi(today), AppConstants.sortBy)
+      );
+    });
   }
 
   @override
@@ -23,16 +36,24 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        child: Container(
-          color: Colors.green,
+      appBar: AppBar(
+        title: const Text(AppConstants.appName),
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Data List View
+            Expanded(
+              child: DataListWidget(),
+            ),
+        
+            // Horizontal Calendar View
+            const HorizontalCalendarWidget(),
+          ],
         ),
-
-      )
+      ),
     );
-  }
-
-  void _getTodaysNews() {
   }
 
 }

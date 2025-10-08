@@ -23,7 +23,7 @@ class AppModule {
     getIt.registerSingleton<Dio>(Dio());
 
     getIt.registerSingleton<ApiClient>(ApiClient(getIt<Dio>()));
-    getIt.registerSingleton<KeyClient>(KeyClient(getIt<Dio>()));
+    getIt.registerSingleton<KeyClient>(KeyClient());
 
     // Data sources
     getIt.registerSingleton<KeyRemoteDataSource>(

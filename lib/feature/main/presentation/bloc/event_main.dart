@@ -12,14 +12,28 @@ class GetNewsEvent extends MainEvent {
   final String from;
   final String sortBy;
 
-  const GetNewsEvent({
-    this.q = "tesla",
-    this.from = "2025-09-08",
-    this.sortBy = "publishedAt",
-  });
+  const GetNewsEvent(this.q, this.from, this.sortBy,);
 
   @override
   List<Object> get props => [
     q, from, sortBy
   ];
+}
+
+class SelectDateEvent extends MainEvent {
+  final DateTime selectedDate;
+
+  const SelectDateEvent(this.selectedDate);
+
+  @override
+  List<Object> get props => [selectedDate];
+}
+
+class ChangeWeekEvent extends MainEvent {
+  final int direction;
+
+  const ChangeWeekEvent(this.direction);
+
+  @override
+  List<Object> get props => [direction];
 }

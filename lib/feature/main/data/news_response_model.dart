@@ -1,5 +1,5 @@
+import 'package:blocsevendays/core/utils/logger.dart';
 import 'package:blocsevendays/feature/main/domain/article_entity.dart';
-
 import '../domain/news_entity.dart';
 
 class NewsResponseModel {
@@ -13,9 +13,12 @@ class NewsResponseModel {
 
   factory NewsResponseModel.fromJson(Map<String, dynamic> json) {
     final articlesList = json['articles'] as List?;
+
     final parsedArticles = articlesList
         ?.map((articleJson) => ArticleModel.fromJson(articleJson))
         .toList() ?? [];
+
+    // AppLogger.debug("SHITAB: "+ parsedArticles!.length.toString());
 
     return NewsResponseModel(
       status: json['status'] as String?,
@@ -47,7 +50,6 @@ class ArticleModel {
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) {
     return ArticleModel(
-      // Use cast with a fallback or simple assignment
       title: json['title'] as String?,
       author: json['author'] as String?,
       publishedAt: json['publishedAt'] as String?,

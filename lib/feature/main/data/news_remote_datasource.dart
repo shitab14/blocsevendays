@@ -29,6 +29,8 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
     );
 
     final results = response.data;
+    // AppLogger.debug("SHITAB: "+ results.toString());
+
     return NewsResponseModel.fromJson(results);
   }
 
