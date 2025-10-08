@@ -1,6 +1,8 @@
+import 'package:blocsevendays/feature/main/presentation/bloc/bloc_main.dart';
 import 'package:blocsevendays/feature/splash/presentation/bloc/bloc_splash.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import '../../feature/main/data/news_remote_datasource.dart';
 import '../../feature/splash/data/key_local_datasource.dart';
 import '../../feature/splash/data/key_remote_datasource.dart';
 import '../../feature/splash/data/key_repository_impl.dart';
@@ -24,9 +26,15 @@ class AppModule {
     getIt.registerSingleton<KeyRemoteDataSource>(
       KeyRemoteDataSourceImpl(getIt<KeyClient>()),
     );
+
     getIt.registerSingleton<KeyLocalDataSource>(
       KeyLocalDataSourceImpl(),
     );
+
+    getIt.registerSingleton<NewsRemoteDataSource>(
+      NewsRemoteDataSourceImpl(getIt<ApiClient>()),
+    );
+
     // Repository
     getIt.registerSingleton<KeyRepository>(
       KeyRepositoryImpl(
@@ -35,10 +43,20 @@ class AppModule {
       ),
     );
 
+    /*getIt.registerSingleton<NewsRepository>(
+      NewsRepositoryImpl(
+        getIt<NewsRemoteDataSource>(),
+      ),
+    );*/
+
     // Use cases
     getIt.registerSingleton<GetKeyUseCase>(
       GetKeyUseCase(getIt<KeyRepository>()),
     );
+
+    /*getIt.registerSingleton<GetNewsUseCase>(
+      GetNewsUseCase(getIt<NewsRepository>()),
+    );*/
 
 
     // BLoC
@@ -47,6 +65,12 @@ class AppModule {
         getKeyUseCase: getIt<GetKeyUseCase>(),
       ),
     );
+
+    /*getIt.registerFactory<MainBloc>(
+          () => MainBloc(
+        getKeyUseCase: getIt<GetNewsUseCase>(),
+      ),
+    );*/
 
   }
 }
