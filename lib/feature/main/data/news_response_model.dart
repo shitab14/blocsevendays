@@ -1,4 +1,6 @@
-import 'package:blocsevendays/feature/main/domain/main_entity.dart';
+import 'package:blocsevendays/feature/main/domain/article_entity.dart';
+
+import '../domain/news_entity.dart';
 
 class NewsResponseModel {
   final String? status;
@@ -10,19 +12,26 @@ class NewsResponseModel {
   });
 
   factory NewsResponseModel.fromJson(Map<String, dynamic> json) {
-    final status = json['status'] as String;
-    final articles = json['articles'] as List<ArticleModel>?;
+    final articlesList = json['articles'] as List?;
+    final parsedArticles = articlesList
+        ?.map((articleJson) => ArticleModel.fromJson(articleJson))
+        .toList() ?? [];
+
     return NewsResponseModel(
-      status: status,
-      articles: articles,
+      status: json['status'] as String?,
+      articles: parsedArticles,
     );
   }
 
   Map<String, dynamic> toJson() => {
     'status': status,
-    'articles': articles,
+    'articles': articles?.map((article) => article.toJson()).toList(),
   };
 
+  NewsEntity toEntity() => NewsEntity(
+    status: status ?? "",
+    articles: articles?.map((article) => article.toEntity()).toList() ?? [],
+  );
 }
 
 class ArticleModel {
@@ -31,19 +40,17 @@ class ArticleModel {
   final String? publishedAt;
 
   ArticleModel({
-    required this.title,
-    required this.author,
-    required this.publishedAt,
+    this.title,
+    this.author,
+    this.publishedAt,
   });
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) {
-    final title = json['title'] as String;
-    final author = json['author'] as String;
-    final publishedAt = json['publishedAt'] as String;
     return ArticleModel(
-      title: title,
-      author: author,
-      publishedAt: publishedAt,
+      // Use cast with a fallback or simple assignment
+      title: json['title'] as String?,
+      author: json['author'] as String?,
+      publishedAt: json['publishedAt'] as String?,
     );
   }
 
@@ -58,9 +65,6 @@ class ArticleModel {
     author: author ?? "",
     publishedAt: publishedAt ?? "",
   );
-
-
-
 }
 
 
